@@ -1,0 +1,27 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+.header-homepage {
+    background-color: #673ab7;
+    padding: 15em;
+    text-align: center;
+    color: white;
+
+    h1 {
+        font-size: 3em;
+    }
+}
+
+.table-card {
+    max-width: 75em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+    margin-bottom: 4em;
+}
+
+table {
+    width: 100%
+}
+
+
