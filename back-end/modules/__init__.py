@@ -1,5 +1,10 @@
+# @author Alex Gomes
+# @create date 2020-11-09 20:01:47
+# @modify date 2020-11-18 21:40:02
+# @desc [API factory.]
+
 from flask import Flask, redirect
-from flask_restplus import Api
+from flask_restplus import Api, Resource
 
 from modules.apis.v1.bp import bp as bp_v1
 from modules.config import config

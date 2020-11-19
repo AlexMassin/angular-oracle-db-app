@@ -1,3 +1,8 @@
+# @author Alex Gomes
+# @create date 2020-11-09 22:10:27
+# @modify date 2020-11-18 21:30:26
+# @desc [Database specific data like queries, connection, engine, etc...]
+
 from sqlalchemy.engine import create_engine
 
 from modules.config import config
