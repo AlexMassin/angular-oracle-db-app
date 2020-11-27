@@ -1,6 +1,6 @@
 # @author Alex Gomes
 # @create date 2020-11-09 21:47:18
-# @modify date 2020-11-18 22:00:34
+# @modify date 2020-11-27 15:26:28
 # @desc [Blueprint for the API, including the API and namespaces.]
 
 from flask import Blueprint
