@@ -1,6 +1,6 @@
 # @author Alex Gomes
 # @create date 2020-11-09 22:09:18
-# @modify date 2020-11-28 20:31:13
+# @modify date 2020-11-30 08:50:55
 # @desc [The controller for the database, handling communication to the db through this component.]
 
 from modules.apis.v1.db import engine as orcl_engine
@@ -102,6 +102,22 @@ class DBTasks:
             proxy = connection.execute(raw)
             return [dict(row) for row in proxy]
 
+    @staticmethod
+    @worker.task
+    def raw_query_task(q):
+        with orcl_engine.connect().execution_options(autocommit=True) as connection:
+            responses = []
+            errors = []
+            for stmt in sqlparse.split(q):
+                try:
+                    proxy = connection.execute(stmt.replace(";", ""))
+                    responses += [dict(row) for row in proxy]
+                except Exception as e:
+                    errors.append(str(e))
+            if not responses:
+                return "Success"
+            return {"responses": responses, "errors": errors}
+
 class DBController:
     Tasks = DBTasks()
 
@@ -129,6 +145,10 @@ class DBController:
         task = self.Tasks.query_tables_task.delay(q)
         return task.get()
 
+    def raw_query(self, q):
+        task = self.Tasks.raw_query_task.delay(q)
+        return task.get()
+
     def test(self, n):
         print("Received test request")
         if (n < 0):
@@ -146,6 +166,7 @@ worker.tasks.register(DBTasks.destroy_task)
 worker.tasks.register(DBTasks.populate_task)
 worker.tasks.register(DBTasks.get_table_task)
 worker.tasks.register(DBTasks.query_tables_task)
+worker.tasks.register(DBTasks.raw_query_task)
 
 ### IMPORTANT ON WHY SEMICOLON AND MULTIPLE STATEMENTS RESULT IN AN ERROR:
 # https://stackoverflow.com/questions/20607524/newline-charter-n-gives-java-sql-sqlexception-ora-00911-invalid-character-n

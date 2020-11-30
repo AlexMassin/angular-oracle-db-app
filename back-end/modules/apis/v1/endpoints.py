@@ -1,6 +1,6 @@
 # @author Alex Gomes
 # @create date 2020-11-09 20:05:39
-# @modify date 2020-11-28 19:43:58
+# @modify date 2020-11-30 08:49:55
 # @desc [API endpoints for the front end to communicate with the backend and db.]
 
 import os
@@ -78,4 +78,12 @@ class QueryTable(Resource):
     def get(self, q):
         '''Return results of sample queries.'''
         r = dbc.query_tables(q)
+        return {'result': r}
+
+@ns_crud.route('/raw-query/<string:q>')
+class RawQuery(Resource):
+    @ns_crud.doc('Execute raw query')
+    def get(self, q):
+        '''Send query to DB'''
+        r = dbc.raw_query(q)
         return {'result': r}
