@@ -107,6 +107,6 @@ In PowerShell:
 ## Full Stack Scripts
 ### Start Everything
 `. start_dev.sh` <br>
-Note: Angular can take a few seconds to start up
+<em>Note: Angular can take a few seconds to start up.<em>
 ### Stop Everything
 `. stop_dev.sh`
