@@ -28,6 +28,10 @@ DB Comms: SQLAlchemy <br>
 Background Worker: Celery <br>
 Message Broker: Redis <br>
 
+## Oracle DB Connection Setup
+Located in `back-end/modules/config.py`: <br>
+Change username, password, etc
+
 ## Redis Server
 ### Installation
 `$ sudo apt update` <br>
