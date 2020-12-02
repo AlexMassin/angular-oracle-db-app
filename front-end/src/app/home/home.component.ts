@@ -1,27 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from '../services/database.service';
+import { NotificationService } from '../services/notification.service';
+
 import TypeIt from "typeit";
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
 
 @Component({
   selector: 'app-home',
@@ -29,11 +10,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  cardTitle: string;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-  
-  constructor() { }
+  sqlQuery: String;
+  loading: Boolean = false;
+  errors: Array<Object>;
+
+  constructor(private databaseService: DatabaseService, private ns: NotificationService) { }
 
   ngOnInit(): void {
     new TypeIt("#description", {speed: 50})
@@ -47,7 +28,67 @@ export class HomeComponent implements OnInit {
     .pause(1000)
     .go();
 
-    this.cardTitle = "Accounts";
+  }
+
+  createDBAction() {
+    this.loading = true;
+    this.databaseService.createDB().subscribe((res:any) => {
+      this.sqlQuery = res.query.trim();
+      this.errors = res.errors;
+      if(this.errors.length > 0) {
+        this.ns.error(res.errors.join("\n\n"));
+
+      } else {
+        this.ns.success("Successfully Created Tables");
+      }
+      console.log(res);
+      this.loading = false;
+    })
+  }
+
+  destroyDBAction() {
+    this.loading = true;
+    this.databaseService.destroyDB().subscribe((res:any) => {
+      this.sqlQuery = res.query.trim();
+      this.errors = res.errors;
+      if(this.errors.length > 0) {
+        this.ns.error(res.errors.join("\n\n"));
+      } else {
+        this.ns.success("Successfully Dropped Tables");
+      }
+      console.log(res);
+      this.loading = false;
+    })
+  }
+
+  populateDBAction() {
+    this.loading = true;
+    this.databaseService.populateDB().subscribe((res:any) => {
+      this.sqlQuery = res.query.trim();
+      this.errors = res.errors;
+      if(this.errors.length > 0) {
+        this.ns.error(res.errors.join("\n\n"));
+      } else {
+        this.ns.success("Successfully Populated Tables");
+      }
+      console.log(res);
+      this.loading = false;
+    })
+  }
+
+  testDBAction() {
+    this.loading = true;
+    this.databaseService.testDB().subscribe((res:any) => {
+      this.sqlQuery = res.query.trim();
+      this.errors = res.errors;
+      if(this.errors.length > 0) {
+        this.ns.error(res.errors.join("\n\n"));
+      } else {
+        this.ns.success("Successfully Connected");
+      }
+      console.log(res);
+      this.loading = false;
+    })
   }
 
 }

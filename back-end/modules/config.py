@@ -1,6 +1,6 @@
 # @author Alex Gomes
 # @create date 2020-11-09 22:07:53
-# @modify date 2020-11-25 04:59:17
+# @modify date 2020-12-01 23:18:35
 # @desc [Config for the API versions and any necessary components.]
 
 config = {
@@ -16,5 +16,7 @@ config = {
     'PORT': 1521,
     'SID': 'orcl',
 
-    'CX_LIB': r'/mnt/c/Users/Alex/Documents/GitHub/angular-oracle-db-app/back-end/instantclient_19_9'
+    'CX_LIB': r'/mnt/c/Users/Alex/Documents/GitHub/angular-oracle-db-app/back-end/instantclient_19_9',
+
+    'ERR_EXCPTS': ['This result object does not return rows. It has been closed automatically.']
 }

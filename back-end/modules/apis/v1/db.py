@@ -1,6 +1,6 @@
 # @author Alex Gomes
 # @create date 2020-11-09 22:10:27
-# @modify date 2020-11-28 20:23:54
+# @modify date 2020-12-01 22:29:48
 # @desc [Database specific data like queries, connection, engine, etc...]
 
 from sqlalchemy.engine import create_engine
@@ -127,7 +127,28 @@ CREATE TABLE Transactions (
     product_id int NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
-);""",
+);
+
+CREATE VIEW accounts_transactions AS (   
+SELECT customers.*, (SELECT COUNT(*) 
+    FROM transactions 
+    WHERE transactions.customer_id = customers.customer_id) 
+    AS TOTAL_CUSTOMER_TRANSACTIONS
+    FROM customers);
+
+CREATE VIEW game_products as (
+SELECT products.* 
+    FROM products 
+    INNER JOIN games 
+    ON products.product_id = games.product_id
+);
+
+CREATE VIEW accounts_age AS (
+SELECT accounts.account_email,
+accounts.birth_date,
+    accounts.account_id,
+    TRUNC(((CURRENT_DATE - accounts.birth_date) / 365.25)) 
+    as age FROM accounts);""",
 
     'POPULATE': r"""INSERT INTO logininformation VALUES ('jordan.quan@ryerson.ca', 'jordanquannn', 'edccb61d3da1ba223a1fbaf105360b25a9b284803706f425d36677e1a1023838');
 INSERT INTO logininformation VALUES ('amassin@ryerson.ca', 'amassin', '9a3f6f15a0c08807311bb89548465f9f2cccea52b427128c5a08c4968dbebb77');
@@ -171,7 +192,6 @@ INSERT INTO products VALUES (2, 'Marvel''s Avengers', 'Crystal Dynamics', 'Squar
 INSERT INTO products VALUES (3, 'ShareX', 'ShareX Team', 'ShareX Team', 'PC', 0.00, 150, 'OS: Windows 7 Service Pack 1', 1);
 INSERT INTO products VALUES (4, 'Civilization VI', 'Firaxis Games', ' 2k', 'PC', 79.99, 150, 'OS: Windows 7 Service Pack 1', 1);
 
-
 INSERT INTO games VALUES (1, null, null, 'E', 'VR, Action', 'English, French, Spanish', 1);
 INSERT INTO games VALUES (2, null, null, 'teen', 'Action, Adventure', 'English, French, Spanish, German', 2);
 
@@ -191,7 +211,6 @@ INSERT INTO reviews VALUES(1, '21-Jul-2020', 5, 'Great Game!', 1, 2);""",
 
     "DESTROY": r"""DROP TABLE Accounts CASCADE CONSTRAINTS;
 DROP TABLE Customers CASCADE CONSTRAINTS;
-DROP TABLE Software CASCADE CONSTRAINTS; 
 DROP TABLE Vendors CASCADE CONSTRAINTS;
 DROP TABLE AccountWallet CASCADE CONSTRAINTS;
 DROP TABLE FinancialInformation CASCADE CONSTRAINTS;
@@ -202,7 +221,10 @@ DROP TABLE Software CASCADE CONSTRAINTS;
 DROP TABLE Reviews CASCADE CONSTRAINTS;
 DROP TABLE Transactions CASCADE CONSTRAINTS;
 DROP TABLE LoginInformation CASCADE CONSTRAINTS;
-DROP TABLE CreditCardInformation CASCADE CONSTRAINTS;""",
+DROP TABLE CreditCardInformation CASCADE CONSTRAINTS;
+DROP VIEW accounts_transactions;
+DROP VIEW game_products;
+DROP VIEW accounts_age;""",
 
     "QUERIES": [
         r"SELECT * FROM accounts ORDER BY account_id ASC;",
@@ -216,6 +238,18 @@ DROP TABLE CreditCardInformation CASCADE CONSTRAINTS;""",
         r"SELECT transaction_id, transaction_date, product_id FROM transactions WHERE product_id = 2;",
         r"SELECT software_id, product_id FROM software;",
         r"SELECT * FROM reviews WHERE comments IS NOT NULL;",
+        r"""SELECT price, title, developer, product_id
+   FROM game_products
+   WHERE price = 0
+   ORDER BY title DESC;""",
+        r"""SELECT products.title, COUNT(transactions.transaction_id) AS CopiesSold FROM transactions
+LEFT JOIN products ON transactions.product_id = products.product_id
+GROUP BY title;""",
+        r"""SELECT *
+   FROM products
+   INNER JOIN games ON products.product_id = games.product_id
+   INNER JOIN software ON products.product_id = software.product_id
+   WHERE products.developer = 'Crystal Dynamics';""",
         r"""SELECT DISTINCT title FROM (
 SELECT * FROM Products
 INNER JOIN (
@@ -228,6 +262,11 @@ INNER JOIN (
     SELECT Transactions.product_id FROM Transactions
 ) SoldProducts
 ON Products.product_id = SoldProducts.product_id)
-ORDER BY title DESC;"""
+ORDER BY title DESC;""",
+        r"""SELECT accounts_age.age, ROUND(2, AVG(accounts_transactions.TOTAL_CUSTOMER_TRANSACTIONS))
+   FROM accounts_age
+   INNER JOIN accounts_transactions
+   ON accounts_transactions.account_id = accounts_age.account_id
+   GROUP BY age;""",
     ]
 }

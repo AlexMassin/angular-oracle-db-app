@@ -12,26 +12,6 @@
     }
 }
 
-.table-card {
-    max-width: 75em;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 4em;
-    margin-bottom: 4em;
-}
-
-table {
-    width: 100%
-}
-
-button {
-    height: 3em;
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-top: 2em;
-    display: inline-block;
-}
-
 pre {
     margin-top: 3em;
     margin-left: 10em;
@@ -62,3 +42,28 @@ code {
     background: #f4f4f4;
 }
 
+.query-input {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10em;
+    margin-top: 5em;
+}
+
+.mat-row {
+    height: auto;
+  }
+  
+.mat-cell {
+    padding: 20px 20px 20px 0;
+}
+
+.mat-header-cell {
+    padding: 20px 20px 20px 0;
+}
