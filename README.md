@@ -1,4 +1,24 @@
 # angular-oracle-db-app
+# Frontend
+## Stack
+Lang: HTML, CSS, Javascript, Typescript <br>
+Framework: Angular 9 <br>
+Style: Material <br>
+
+## Angular
+### Installation
+`$ sudo npm install -g @angular/cli` <br>
+`$ sudo npm install --save-dev @angular-devkit/build-angular` <br>
+`$ sudo ng update` <br>
+`$ sudo npm update`
+
+### Set Up Packages
+`$ cd front-end` <br>
+`$ sudo npm install`
+
+### Start the Developmental Server
+`$ cd front-end` <br>
+`$ sudo npm start`
 
 # Backend
 ## Stack
@@ -79,3 +99,10 @@ In PowerShell:
 ```powershell
 > lsnrctl start
 ```
+
+## Full Stack Scripts
+### Start Everything
+`. start_dev.sh` <br>
+Note: Angular can take a few seconds to start up
+### Stop Everything
+`. stop_dev.sh`
