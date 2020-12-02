@@ -1,0 +1,64 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+.header-homepage {
+    background-color: #673ab7;
+    padding: 15em;
+    text-align: center;
+    color: white;
+
+    h1 {
+        font-size: 3em;
+    }
+}
+
+.table-card {
+    max-width: 75em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+    margin-bottom: 4em;
+}
+
+table {
+    width: 100%
+}
+
+button {
+    height: 3em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 2em;
+    display: inline-block;
+}
+
+pre {
+    margin-top: 3em;
+    margin-left: 10em;
+    margin-right: 10em;
+    font-size: 90%;
+    line-height: 1.2em;
+    font-family: "Courier 10 Pitch", Courier, monospace; 
+    white-space: pre; 
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap; 
+    white-space: -o-pre-wrap; 
+
+    min-height: 10em;
+    width: auto;
+    display: block;
+    clear: both;
+    color: #555555;
+    padding: 1em 1em;
+    background: #f4f4f4;
+    border: solid 1px #e1e1e1
+} 
+code { 
+    line-height: 1.2em;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+
+    display: inline; 
+    color: #555555;
+    background: #f4f4f4;
+}
+

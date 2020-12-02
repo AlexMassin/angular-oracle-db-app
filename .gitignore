@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Config/Secrets
+modules/config.py
+
+# Editor prefs
+.vscode/
+
+# Python Cache
+__pycache__/

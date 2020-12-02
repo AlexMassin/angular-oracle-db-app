@@ -1,0 +1,31 @@
+<div>     
+    <div class="header-homepage">
+        <h1>
+            Query Tables
+        </h1>
+    </div>
+    <div style="margin: 2em;">
+        <div class="query-input" *ngIf="loading == false">
+            <h4>Simple & Advanced Queries</h4>
+            <mat-form-field appearance="fill">
+            <mat-label>Queries</mat-label>
+            <mat-select (selectionChange)="queryOnChange($event)">
+                <mat-option *ngFor="let query of queries" [value]="query.value">
+                {{query.viewValue}}
+                </mat-option>
+            </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <pre><code>{{ this.sqlQuery }}</code></pre>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 centered">
+        <ng-container [matColumnDef]="col" *ngFor="let col of  displayedColumns">
+          <th mat-header-cell *matHeaderCellDef> {{col | uppercase}} </th>
+          <td mat-cell *matCellDef="let element"> {{element[col]}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

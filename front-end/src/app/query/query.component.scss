@@ -1,0 +1,69 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+.header-homepage {
+    background-color: #673ab7;
+    padding: 15em;
+    text-align: center;
+    color: white;
+
+    h1 {
+        font-size: 3em;
+    }
+}
+
+pre {
+    margin-top: 3em;
+    margin-left: 10em;
+    margin-right: 10em;
+    font-size: 90%;
+    line-height: 1.2em;
+    font-family: "Courier 10 Pitch", Courier, monospace; 
+    white-space: pre; 
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap; 
+    white-space: -o-pre-wrap; 
+
+    min-height: 10em;
+    width: auto;
+    display: block;
+    clear: both;
+    color: #555555;
+    padding: 1em 1em;
+    background: #f4f4f4;
+    border: solid 1px #e1e1e1
+} 
+code { 
+    line-height: 1.2em;
+    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+
+    display: inline; 
+    color: #555555;
+    background: #f4f4f4;
+}
+
+.query-input {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10em;
+    margin-top: 5em;
+}
+
+.mat-row {
+    height: auto;
+  }
+  
+.mat-cell {
+    padding: 20px 20px 20px 0;
+}
+
+.mat-header-cell {
+    padding: 20px 20px 20px 0;
+}

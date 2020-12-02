@@ -1,0 +1,20 @@
+
+<div>
+  <div class="header-homepage">
+        <h1>
+            Database Homepage
+        </h1>
+        <h2 id="description"></h2>
+  </div>
+  <div style="text-align: center;">
+    <button mat-raised-button color="accent" (click)="createDBAction()">Create Tables</button>
+    <button mat-raised-button color="accent" (click)="destroyDBAction()">Drop Tables</button>
+    <button mat-raised-button color="accent" (click)="populateDBAction()">Populate Tables</button>
+    <button mat-raised-button color="accent" (click)="testDBAction()">Test Connection</button>
+  </div>
+  <div>
+    <mat-progress-spinner *ngIf="loading" style="margin-left: auto;margin-right: auto;margin-top: 2em;"mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <pre><code>{{ this.sqlQuery }}</code></pre>
+</div>
+
