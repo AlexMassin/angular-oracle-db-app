@@ -20,3 +20,6 @@ cd  ..
 cd front-end
 run_detached "\${START_FE}"
 cd ..
+echo "Front End: localhost:4200"
+echo "Back End: localhost:5000"
+echo "Note: Angular can take around a minute to fully start up depending on your machine."
